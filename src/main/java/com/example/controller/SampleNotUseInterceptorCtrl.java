@@ -37,8 +37,7 @@ public class SampleNotUseInterceptorCtrl {
     public ModelAndView notUseInterceptor(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         // JSON 문자열을 Map or List Object 로 변환
-        MobileMap requestMap = new MobileMap(request, response);
-        MobileMap responseMap = new MobileMap();
+        Map<String,Object> responseMap = new HashMap<String, Object>();
         try {
             Map<String,Object> respMspBody = new HashMap<String, Object>();
             /**************************************************************************************************
@@ -52,17 +51,18 @@ public class SampleNotUseInterceptorCtrl {
             Map<String, Object> jsonHeadMap = MspProtocolUtil.getMspProtocolHeadMap(request, null);
             jsonHeadMap.put(Const.RESULT_CODE,"200");
             jsonHeadMap.put(Const.RESULT_MESSAGE,"OK");
-            responseMap.setHeadMap(jsonHeadMap);
-            responseMap.setBodyMap(respMspBody);
+            responseMap.put(Const.HEAD,jsonHeadMap);
+            responseMap.put(Const.BODY,respMspBody);
         } catch (Exception e) {
             logger.error(e.toString());
-            responseMap.setResultCode(Const.EXCEPTION_ERROR);
+            responseMap.put(Const.RESULT_MESSAGE,Const.EXCEPTION_ERROR);
             if (e.getMessage() != null) {
-                responseMap.setResultMessage(e.getMessage());
+                responseMap.put(Const.RESULT_MESSAGE,e.getMessage());
             } else {
-                responseMap.setResultMessage(messageSource.getMessage("500.error", null, Locale.ENGLISH));
+                responseMap.put(Const.RESULT_MESSAGE, messageSource.getMessage("500.error", null, Locale.ENGLISH));
             }
         }
-        return responseMap.jsonView();
+        ModelAndView modelAndView = new ModelAndView("defaultJsonView");
+        return modelAndView;
     }
 }

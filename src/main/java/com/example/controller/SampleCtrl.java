@@ -107,7 +107,6 @@ public class SampleCtrl {
              * 이 부분에 비즈니스 로직을 코딩한다.
              * 만약, 클라이언트에 에러처리를 하고 싶다면  responseMap.setResultCode(Const.EXCEPTION_ERROR); 사용
              **************************************************************************************************/
-
             List<Map<String,Object>> userList = sqlSession.selectList("Sample.getSampleData",reqMap);
             responseBodyMap.put("userList", userList);
 

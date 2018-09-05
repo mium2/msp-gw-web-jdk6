@@ -20,6 +20,11 @@
     if(request.getAttribute("encPass")!=null){
         encPass = request.getAttribute("encPass").toString();
     }
+
+    String servletContext = request.getContextPath();
+    if(servletContext.equals("/")){
+        servletContext = "";
+    }
 %>
 <html>
 <head>
@@ -33,7 +38,6 @@
         table.FormTable, table.FormTable td{
             border               : 1px solid #CCC;
             border-collapse      : collapse;
-            font                 : "굴림", "Bitstream Vera Sans", Verdana, Helvetica, sans-serif;
         }
 
         table.FormTable thead th,
@@ -111,7 +115,7 @@
     </script>
 </head>
 <body>
-<form name="encodForm" method="post" action="<%=request.getContextPath()%>/dbcpEncode" onsubmit="return chkForm();">
+<form name="encodForm" method="post" action="<%=servletContext%>/dbcpEncode" onsubmit="return chkForm();">
     <table style="width: 80%" class="FormTable">
         <colgroup><!-- 6cell -->
             <col width="20%"/><col width="auto"/>

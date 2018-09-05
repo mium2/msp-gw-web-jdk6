@@ -108,6 +108,8 @@ public class TestMain {
             appAgents.remove(0);
 //            appAgents.add(0, false);
             System.out.println("###### 상태만 false로 변경");
+
+
         }
 
         this.notifyAll();
